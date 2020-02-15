@@ -1,0 +1,367 @@
+z=''#初始一个字符串用于存放不同的变量名
+开始()#当输入 结束 时结束循环
+
+import numpy as np
+def 开始():
+    a =np.zeros(100)#设置一个长度为100的全为0的数组，用以存储不同变量的不同数量
+    q=0
+    while q==0:
+        str = input("请输入：");#循环输入指令，当输入的 结束 的时候结束循环
+        if (str=='结束'):
+            break;
+        else:
+            panduan(str,a)#将指令输入到判断指令处
+#用一个while循环来输入，当输入结束的时候停止循环
+def panduan(str,a):#对最开始语句的判断来执行相应的函数
+    s=str.split(" ")#对空格进行分片
+    if (len(s)<=2):#当分片后小于等于两个时
+        if (s[0]=='看看'):#判断第一个词是否是 看看
+            kankanpan(str,a)#进入相应的判断函数
+        else:
+            print("指令不成立！")
+    else:
+        if (s[2]=='等于' and s[0]=='整数'):#指令为等于
+            if(s[3].find('负')!=-1):#数字中出现负
+                print('设置数字不能为负！')
+            else:
+                bianliang(str,a) 
+        elif (s[1]=='增加'):#指令为增加
+            if(s[2].find('负')!=-1):
+                print('设置数字不能为负！')
+            else:
+                zengliang(s,a)
+        elif (s[1]=='减少'):#指令为减少
+            if(s[2].find('负')!=-1):
+                print('设置数字不能为负！')
+            else:
+                zengliang(s,a)
+        elif (s[0]=='如果'):#指令中有如果
+            if(s[3].find('负')!=-1):
+                print('设置数字不能为负！')
+            else:
+                teshupan(str,a)
+        else:#若都不存在则指令不成立
+            print("指令不成立！")
+
+def teshupan(str,a):#当出现 如果 时进行变量是否存在的判断
+    s=str.split(" ")
+    global z
+    if (z.find(s[1])==-1):#没有创建变量，在z中找不到相同的变量名
+        print("没有创建相应的变量")
+    else:#创建过变量
+        if (shuzi(s[3])==10000 and shuzibai(s[3])==10000):
+            print('判断数字不正确或大于一百！')
+        else:
+            teshu(str,a)
+
+def teshu(str,a):#自定义判断语句
+    s=str.split(" ")
+    if (s[2]=='大于'):#指令关键词 大于
+        if (len(s[3].split('十'))==1):#判定初始时是否含有'十'
+            if(a[z.find(s[1])]>=shuzi(s[3])):
+                if (s[5]=='看看'):#当句子中有‘看看’时说明是一种判断语句
+                    q=s[6].replace('”','')
+                    q=q.replace('“','')#去除双引号
+                    print(q)
+                else:#没有 看看 说明是另一种指令
+                    zengliang(s[5:8],a)#进行加减运算
+            else:
+                if (s[5]=='看看'):
+                    q=s[9].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    print("无")
+        if(len(s[3].split('十'))==2):
+            if(a[z.find(s[1])]>=shuzibai(s[3])):
+                if (s[5]=='看看'):
+                    q=s[6].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    zengliang(s[5:8],a)
+            else:
+                if (s[5]=='看看'):
+                    q=s[9].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    print("无")
+    if (s[2]=='小于'):
+        if (len(s[3].split('十'))==1):#判定初始时是否含有'十'
+            if(a[z.find(s[1])]<shuzi(s[3])):
+                if (s[5]=='看看'):
+                    q=s[9].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    zengliang(s[5:8],a)
+            else:
+                if (s[5]=='看看'):
+                    q=s[6].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    ptirnt("无")
+        if(len(s[3].split('十'))==2):
+            if(a[z.find(s[1])]<shuzibai(s[3])):
+                if (s[5]=='看看'):
+                    q=s[9].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    zengliang(s[5:8],a)
+            else:
+                if (s[5]=='看看'):
+                    q=s[6].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    ptirnt("无")
+    if (s[2]=='等于'):
+        if (len(s[3].split('十'))==1):#判定初始时是否含有'十'
+            if(a[z.find(s[1])]==shuzi(s[3])):
+                if (s[5]=='看看'):
+                    q=s[9].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    zengliang(s[5:8],a)
+            else:
+                if (s[5]=='看看'):
+                    q=s[6].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    ptirnt("无")
+        if(len(s[3].split('十'))==2):
+            if(a[z.find(s[1])]==shuzibai(s[3])):
+                if (s[5]=='看看'):
+                    q=s[9].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    zengliang(s[5:8],a)
+            else:
+                if (s[5]=='看看'):
+                    q=s[6].replace('”','')
+                    q=q.replace('“','')
+                    print(q)
+                else:
+                    ptirnt("无")
+
+def bianliang(str,a):#为不同变量寻找相应位置
+    s=str.split(" ")
+    global z
+    if (z.find(s[1])==-1):#没有创建变量
+        z=z+s[1]#在z中加入变量名
+        chushi(str,a)
+    else:#创建过变量，更改对应的数
+        chushi(str,a)
+
+def chushi(str,a):#初始化一个全局变量
+    s=str.split(' ')
+    if (len(s[3].split('十'))==1):#判定初始时是否含有'十'
+        a[z.find(s[1])]=shuzi(s[3])#将对应的数字放到数组中变量在z中对应的位置   a【变量名在z中的位置】=变量的数
+    if(len(s[3].split('十'))==2):
+        a[z.find(s[1])]=shuzibai(s[3])
+    if a[z.find(s[1])] == 10000:
+        print("错误！输入变量不是数字或超过一百")
+
+def zengliang(s,a):
+    global z
+    if (z.find(s[0])==-1):#判断z中有没有变量名
+        print("没有创建相应的变量")
+    else:#创建过变量
+        jiajian(s,a)
+
+def jiajian(s,a):#对加减函数的调用
+    if(fuhao(s,a)>=10000 or fuhao(s,a)<=-9900):
+        print('数字不正确，请重试！')
+    elif(fuhao(s,a)<0):#对计算结果进行判断，为负数不输出
+        print('得数为负，错误！')
+    elif(fuhao(s,a)>100):
+        print('得数超过一百，错误！')
+    else:
+        a[z.find(s[0])]=fuhao(s,a)#将结果放入对应位置
+
+def kankanpan(str,a):
+    s=str.split(" ")
+    global z
+    if (z.find(s[1])==-1):#判断z中有没有变量名
+        print("没有创建相应的变量")
+    else:#创建过变量
+        kankan(str,a)
+
+def kankan(str,a):#看看 (变量名)的输出判断
+    s=str.split(' ')
+    if (a[z.find(s[1])]>20):#若大于20则进行一种转换函数
+        print(hanzibai(a[z.find(s[1])]))
+    else:
+        print(hanzi(a[z.find(s[1])]))
+
+def fuhao(s,a):#增加和减少的运算  这里只有百以内的加减
+    if (s[1] == '增加'):#判断是增加还是减少
+        if (len(s[2].split('十'))==1):#判定初始时是否含有'十'
+            return a[z.find(s[0])]+shuzi(s[2])
+        if(len(s[2].split('十'))==2):
+            return a[z.find(s[0])]+shuzibai(s[2])
+    if (s[1] == '减少'):
+        if (len(s[2].split('十'))==1):#判定初始时是否含有'十'
+            return a[z.find(s[0])]-shuzi(s[2])
+        if(len(s[2].split('十'))==2):
+            return a[z.find(s[0])]-shuzibai(s[2])
+
+def shuzibai(x):
+    if (len(x)!=3):
+        if (x == '十'):
+            return 10
+        elif(x[1:]=='十'):
+            if shuzi(x[:-1])== 10000:
+                return 10000
+            else:
+                return shuzi(x[:-1])*10
+        elif(x[0:-1]=='十'):
+            if shuzi(x[1:])==10000:
+                return 10000
+            else:
+                return shuzi(x[1:])+10
+        else:
+            return 10000
+    elif (len(x)==3):
+        if (shuzi(x.split('十')[0]) == 10000 or shuzi(x.split('十')[1])==10000):
+            return 10000
+        else:
+            return shuzi(x.split('十')[0])*10+shuzi(x.split('十')[1])
+    else:
+        return 10000
+
+def shuzi(a):#不含十的汉字转数字
+    if (a == '零'):
+        return 0
+    elif (a == '一'):
+        return 1
+    elif (a == '二'):
+        return 2
+    elif (a == '三'):
+        return 3
+    elif (a == '四'):
+        return 4
+    elif (a == '五'):
+        return 5
+    elif (a == '六'):
+        return 6
+    elif (a == '七'):
+        return 7
+    elif (a == '八'):
+        return 8
+    elif (a == '九'):
+        return 9
+    elif (a == '一百'):
+        return 100
+    else:
+        return 10000
+
+def hanzi(a):#二十以内数字转汉字
+    if (a == 0):
+        return '零'
+    if (a == 1):
+        return '一'
+    if (a == 2):
+        return '二'
+    if (a == 3):
+        return '三'
+    if (a == 4):
+        return '四'
+    if (a == 5):
+        return '五'
+    if (a == 6):
+        return '六'
+    if (a == 7):
+        return '七'
+    if (a == 8):
+        return '八'
+    if (a == 9):
+        return '九'
+    if (a == 10):
+        return '十'
+    if (a == 11):
+        return '十一'
+    if (a == 12):
+        return '十二'
+    if (a == 13):
+        return '十三'
+    if (a == 14):
+        return '十四'
+    if (a == 15):
+        return '十五'
+    if (a == 16):
+        return '十六'
+    if (a == 17):
+        return '十七'
+    if (a == 18):
+        return '十八'
+    if (a == 19):
+        return '十九'
+    if (a == 20):
+        return '二十'
+
+def hanzibai(a):#二十到一百的数字转汉字
+    if a%10==0:#对应整十整百
+        if (a/10 == 10):
+            return '一百'
+        if (a/10 == 2):
+            return '二十'
+        if (a/10 == 3):
+            return '三十'
+        if (a/10 == 4):
+            return '四十'
+        if (a/10 == 5):
+            return '五十'
+        if (a/10 == 6):
+            return '六十'
+        if (a/10 == 7):
+            return '七十'
+        if (a/10 == 8):
+            return '八十'
+        if (a/10 == 9):
+            return '九十'
+    else:
+        s=a//10#python中//才能得到整数部分
+        d=a%10#分别对应个位和十位
+        if (s == 2):
+            z = '二十'
+        if (s == 3):
+            z = '三十'
+        if (s == 4):
+            z = '四十'
+        if (s == 5):
+            z = '五十'
+        if (s == 6):
+            z = '六十'
+        if (s == 7):
+            z = '七十'
+        if (s == 8):
+            z = '八十'
+        if (s == 9):
+            z = '九十'
+        if (d == 1):
+            x = '一'
+        if (d == 2):
+            x = '二'
+        if (d == 3):
+            x = '三'
+        if (d == 4):
+            x = '四'
+        if (d == 5):
+            x = '五'
+        if (d == 6):
+            x = '六'
+        if (d == 7):
+            x = '七'
+        if (d == 8):
+            x = '八'
+        if (d == 9):
+            x = '九'
+        c=z+x
+        return c
